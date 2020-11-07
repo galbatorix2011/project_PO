@@ -9,12 +9,12 @@ public abstract class Product {
     private int _value;
     private Supplier _supplier;
 
-    public Product(String key, int price, int criticalValue, Supplier supplier){
+    public Product(String key, int price, int criticalValue, Supplier supplier, int value){
         _key = key;
         _price = price;
         _criticalValue = criticalValue;
-        _value = 0;
         _supplier = supplier;
+        _value = value;
     }
 
     public Supplier getSupplier(){

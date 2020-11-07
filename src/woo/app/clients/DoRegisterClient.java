@@ -5,6 +5,7 @@ import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
 import woo.app.exception.DuplicateClientKeyException;
 import woo.core.StoreManager;
+import woo.core.exception.DuplicateClientException;
 //FIXME import other classes
 
 /**
@@ -26,7 +27,7 @@ public class DoRegisterClient extends Command<StoreManager> {
   }
 
   @Override
-  public void execute() throws DialogException {
+  public void execute() throws DialogException, DuplicateClientKeyException {
     String key;
     String name;
     String address;
@@ -34,11 +35,10 @@ public class DoRegisterClient extends Command<StoreManager> {
     key = _key.value();
     name = _name.value();
     address = _address.value();
-    try{
+    try {
       _receiver.registerClient(key, name, address);
-    } catch(DuplicateClientKeyException e){
-      _display.addLine(e.getMessage());
-      _display.display();
+    } catch(DuplicateClientException e){
+      throw new DuplicateClientKeyException(e.getMessage());
     }
   }
 

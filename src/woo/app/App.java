@@ -4,13 +4,15 @@ import static pt.tecnico.po.ui.Dialog.IO;
 
 import pt.tecnico.po.ui.Menu;
 import woo.core.StoreManager;
+import woo.core.exception.DuplicateSupplierException;
 import woo.core.exception.ImportFileException;
+import woo.core.exception.*;
 
 /** Main driver for the management application. */
 public class App {
 
   /** @param args command line arguments. */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws DuplicateClientException, WrongServiceLevelException, NonExistentSupplierException, DuplicateProductException, DuplicateSupplierException, WrongServiceTypeException {
     StoreManager storefront = new StoreManager();
 
     String datafile = System.getProperty("import");

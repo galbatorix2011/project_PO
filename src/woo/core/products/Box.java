@@ -6,8 +6,8 @@ public class Box extends Product{
 
     private TypeService _typeService;
 
-    public Box(String key, int price, int criticalValue, Supplier supplier, TypeService typeService){
-        super(key, price, criticalValue, supplier);
+    public Box(String key, int price, int criticalValue, Supplier supplier, TypeService typeService, int value){
+        super(key, price, criticalValue, supplier, value);
         _typeService = typeService;
     }
 

@@ -20,7 +20,8 @@ public class DoShowAllProducts extends Command<StoreManager> {
 
   @Override
   public final void execute() throws DialogException {
-    //FIXME implement command
+    _display.addLine(_receiver.getAllProducts());
+    _display.display();
   }
 
 }

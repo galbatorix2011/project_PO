@@ -8,8 +8,8 @@ public class Book extends Product{
     private String _author;
     private String _isbn;
 
-    public Book(String key, String title, String isbn, String author, int price, int criticalValue, Supplier supplier){
-        super(key, price, criticalValue, supplier);
+    public Book(String key, int price, int criticalValue, Supplier supplier, String title, String author, String isbn, int value){
+        super(key, price, criticalValue, supplier, value);
         _title = title;
         _isbn = isbn;
         _author = author;
@@ -28,6 +28,6 @@ public class Book extends Product{
     }
 
     public String toString(){
-        return "Book|" + super.toString() + "|" + _title + "|" + _author + "|" + _isbn;
+        return "BOOK|" + super.toString() + "|" + _title + "|" + _author + "|" + _isbn;
     }
 }

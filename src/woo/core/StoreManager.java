@@ -5,14 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.Map;
 
-import woo.app.exception.DuplicateClientKeyException;
-import woo.app.exception.UnknownClientKeyException;
 import woo.core.entities.Client;
 import woo.core.exception.UnavailableFileException;
 import woo.core.exception.MissingFileAssociationException;
 import woo.core.exception.ImportFileException;
 import woo.core.exception.BadEntryException;
-import woo.app.exception.InvalidDateException;
+import woo.core.exception.*;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -36,40 +34,51 @@ public class StoreManager {
     return _date;
   }
 
-  public void advanceDate(int days) throws InvalidDateException{
+  public void advanceDate(int days) throws InvalidDaysException{
     if (days <= 0)
-      throw new InvalidDateException(days);
+      throw new InvalidDaysException(days);
     _date += days;
   }
 
-  public String getClient(String key) throws UnknownClientKeyException {
-    return _store.getClient(key).toString();
+  public String getClient(String key) throws WrongClientKeyException {
+    return _store.getClient(key);
   }
 
   public String getAllClients(){
-    Map<String, Client> clients = _store.getAllClients();
-    String clientsToString = "";
-    for (Client c: clients.values())
-      clientsToString += c.toString() + "\n";
-   return clientsToString.substring(0, clientsToString.length() - 1);
+    return _store.getAllClients();
   }
 
-  public void registerClient(String key, String name, String address) throws DuplicateClientKeyException {
+  public void registerClient(String key, String name, String address) throws DuplicateClientException {
     _store.registerClient(key, name, address);
   }
 
-  public void registerBox(String Key){
-
-
+  public String getAllSuppliers(){
+    return _store.getAllSuppliers();
   }
 
-  public void registerContainer(String Key){
-
-
+  public void registerSupplier(String key, String name, String address) throws DuplicateSupplierException {
+    _store.registerSupplier(key, name, address);
   }
 
-  public void registerBook(String key){
+  public void registerBox(String productKey, int price, int criticalValue, String supplierKey, String typeServiceString)
+          throws NonExistentSupplierException, DuplicateProductException, WrongServiceTypeException {
+    _store.registerBox(productKey, price, criticalValue, supplierKey, typeServiceString, 0);
+  }
 
+  public void registerContainer(String productKey, int price, int criticalValue, String supplierKey,
+                                String typeServiceString, String qualityServiceString) throws NonExistentSupplierException,
+          DuplicateProductException, WrongServiceTypeException, WrongServiceLevelException{
+    _store.registerContainer(productKey, price, criticalValue, supplierKey, typeServiceString,
+            qualityServiceString, 0);
+  }
+
+  public void registerBook(String productKey, int price, int criticalValue, String supplierKey, String title,
+           String author, String isbn) throws NonExistentSupplierException, DuplicateProductException{
+    _store.registerBook(productKey, price, criticalValue, supplierKey, title, author, isbn, 0);
+  }
+
+  public String getAllProducts(){
+    return _store.getAllProducts();
   }
 
   /**
@@ -104,7 +113,7 @@ public class StoreManager {
    * @param textfile
    * @throws ImportFileException
    */
-  public void importFile(String textfile) throws ImportFileException {
+  public void importFile(String textfile) throws ImportFileException, DuplicateClientException, WrongServiceLevelException, NonExistentSupplierException, DuplicateProductException, DuplicateSupplierException, WrongServiceTypeException {
     try {
       _store.importFile(textfile);
     } catch (IOException | BadEntryException /* FIXME maybe other exceptions */ e) {

@@ -5,8 +5,8 @@ public class Container extends Box{
 
     private QualityService _qualityService;
 
-    public Container(String key, int price, int criticalValue, Supplier supplier, TypeService typeService, QualityService qualityService){
-        super(key, price, criticalValue, supplier, typeService);
+    public Container(String key, int price, int criticalValue, Supplier supplier, TypeService typeService, QualityService qualityService, int value){
+        super(key, price, criticalValue, supplier, typeService, value);
         _qualityService = qualityService;
     }
 
